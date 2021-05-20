@@ -36,6 +36,9 @@ outputs:
   version:
     description: 'Version of the plug-in'
     value: ${{ steps.get-version.outputs.version }}
+  dest:
+    description: 'Destination'
+    value: ${{ steps.upload.outputs.dest }}
 runs:
   using: "composite"
   steps:
@@ -47,12 +50,6 @@ runs:
       run: echo "${{ inputs.remote-host }} ${{ inputs.ssh-fingerprint-type }} ${{ inputs.ssh-fingerprint }}" >> ~/.ssh/known_hosts
       shell: bash
 
-    - name: Setup SSH
-      uses: webfactory/ssh-agent@v0.5.1
-      with:
-        # Private key required to access the host
-        ssh-private-key: ${{ inputs.ssh-private-key }}
-
     - id: upload
       run: >
           ${{ github.action_path }}/upload.sh
@@ -62,9 +59,3 @@ runs:
           \"${{ inputs.remote-user }}@${{ inputs.remote-host }}\"
           \"${{ inputs.remote-root }}/${{ inputs.relative-path }}\"
       shell: bash
-
-    - if: ${{ inputs.comment }} == true
-      name: Create commit comment
-      uses: peter-evans/commit-comment@v1
-      with:
-        body: Successfully deployed at: ${{ remote-baseurl }}/${{ remote-relative-path }}${{ steps.upload.outputs.dest }}
