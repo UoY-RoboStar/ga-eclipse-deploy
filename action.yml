@@ -23,7 +23,7 @@ inputs:
     descirption: 'Remote SSH public key fingerprint'
     required: false
   ssh-fingerprint-type:
-    descirption: 'Remote SSH public key fingerprint'
+    descirption: 'Remote SSH public key fingerprint type'
     required: false
   comment:
     description: 'Insert commit comment with URL on success'
@@ -57,7 +57,7 @@ runs:
       run: ${{ github.action_path }}/upload.sh
           \"${{ inputs.maven-target }}\"
           \"${{ inputs.email }}\"
-          \"${{ steps.results.outputs.get-version }}\"
+          \"${{ steps.get-version.outputs.version }}\"
           \"${{ inputs.remote-user }}@${{ inputs.remote-host }}\"
           \"${{ inputs.remote-root }}/${{ inputs.relative-path }}\"
       shell: bash
@@ -66,4 +66,4 @@ runs:
       name: Create commit comment
       uses: peter-evans/commit-comment@v1
       with:
-        body: Successfully deployed at: ${{ remote-baseurl }}/${{ remote-relative-path }}${{ steps.results.outputs.dest }}
+        body: Successfully deployed at: ${{ remote-baseurl }}/${{ remote-relative-path }}${{ steps.upload.outputs.dest }}
