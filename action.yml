@@ -54,7 +54,8 @@ runs:
         ssh-private-key: ${{ inputs.remote-ssh-key }}
 
     - id: upload
-      run: ${{ github.action_path }}/upload.sh
+      run: >
+          ${{ github.action_path }}/upload.sh
           \"${{ inputs.maven-target }}\"
           \"${{ inputs.email }}\"
           \"${{ steps.get-version.outputs.version }}\"
