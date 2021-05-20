@@ -16,7 +16,7 @@ inputs:
   remote-relative-path:
     description: 'Remote path for deployment relative to root'
     required: true
-  remote-ssh-key:
+  ssh-private-key:
     description: 'User SSH private key'
     required: true
   ssh-fingerprint:
@@ -44,14 +44,14 @@ runs:
       shell: bash
 
     - name: Add SSH known hosts
-      run: echo "${{inputs.remote-host}} ${{ inputs.ssh-fingerprint-type }} ${{ inputs.ssh-fingerprint }}" >> ~/.ssh/known_hosts
+      run: echo "${{ inputs.remote-host }} ${{ inputs.ssh-fingerprint-type }} ${{ inputs.ssh-fingerprint }}" >> ~/.ssh/known_hosts
       shell: bash
 
     - name: Setup SSH
       uses: webfactory/ssh-agent@v0.5.1
       with:
         # Private key required to access the host
-        ssh-private-key: ${{ inputs.remote-ssh-key }}
+        ssh-private-key: ${{ inputs.ssh-private-key }}
 
     - id: upload
       run: >
