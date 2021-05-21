@@ -50,8 +50,8 @@ runs:
       run: >
           ${{ github.action_path }}/upload.sh
           ${{ inputs.maven-target }}
-          ${{ inputs.email }}
-          ${{ steps.get-version.outputs.version }}
+          "${{ inputs.email }}"
+          "${{ steps.get-version.outputs.version }}"
           ${{ inputs.remote-user }}@${{ inputs.remote-host }}
           ${{ inputs.remote-root }}/${{ inputs.relative-path }}
       shell: bash
