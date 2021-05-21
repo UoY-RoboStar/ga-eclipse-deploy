@@ -6,6 +6,7 @@ branch=$2
 version=$3
 url=$4
 remote=$5
+branch=${GITHUB_REF##*/}
 
 # Use the branch name to choose the name of the branch. This assumes
 # no branch of name 'update' will ever be used.

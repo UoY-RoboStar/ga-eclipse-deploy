@@ -25,10 +25,6 @@ inputs:
   ssh-fingerprint-type:
     descirption: 'Remote SSH public key fingerprint type'
     required: false
-  comment:
-    description: 'Insert commit comment with URL on success'
-    required: false
-    default: true
   maven-target:
     description: 'Name of maven target folder'
     required: true
@@ -43,7 +39,7 @@ runs:
   using: "composite"
   steps:
     - id: get-version
-      run: ${{ github.action_path }}/get_version.sh \"${{ maven-target }}\"
+      run: ${{ github.action_path }}/get_version.sh \"${{ inputs.maven-target }}\"
       shell: bash
 
     - name: Add SSH known hosts
