@@ -1,5 +1,5 @@
 #!/bin/bash
-dir = $1
+dir=$1
 
 # Logic adapted from existing upload.sh
 file=$(ls $dir/features | grep -m 1 jar)

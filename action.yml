@@ -39,7 +39,7 @@ runs:
   using: "composite"
   steps:
     - id: get-version
-      run: ${{ github.action_path }}/get_version.sh \"${{ inputs.maven-target }}\"
+      run: ${{ github.action_path }}/get_version.sh ${{ inputs.maven-target }}
       shell: bash
 
     - name: Add SSH known hosts
@@ -49,9 +49,9 @@ runs:
     - id: upload
       run: >
           ${{ github.action_path }}/upload.sh
-          \"${{ inputs.maven-target }}\"
+          ${{ inputs.maven-target }}
           \"${{ inputs.email }}\"
           \"${{ steps.get-version.outputs.version }}\"
           \"${{ inputs.remote-user }}@${{ inputs.remote-host }}\"
-          \"${{ inputs.remote-root }}/${{ inputs.relative-path }}\"
+          ${{ inputs.remote-root }}/${{ inputs.relative-path }}
       shell: bash
