@@ -5,7 +5,7 @@ inputs:
     description: 'Remote host'
     required: true
   remote-user:
-    description: 'Remote SSH user'
+    description: 'Remote user'
     required: true
   remote-root:
     description: 'Remote root folder'
@@ -16,15 +16,6 @@ inputs:
   remote-relative-path:
     description: 'Remote path for deployment relative to root'
     required: true
-  ssh-private-key:
-    description: 'User SSH private key'
-    required: true
-  ssh-fingerprint:
-    descirption: 'Remote SSH public key fingerprint'
-    required: false
-  ssh-fingerprint-type:
-    descirption: 'Remote SSH public key fingerprint type'
-    required: false
   maven-target:
     description: 'Name of maven target folder'
     required: true
@@ -40,10 +31,6 @@ runs:
   steps:
     - id: get-version
       run: ${{ github.action_path }}/get_version.sh ${{ inputs.maven-target }}
-      shell: bash
-
-    - name: Add SSH known hosts
-      run: echo "${{ inputs.remote-host }} ${{ inputs.ssh-fingerprint-type }} ${{ inputs.ssh-fingerprint }}" >> ~/.ssh/known_hosts
       shell: bash
 
     - id: upload
