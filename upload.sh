@@ -10,7 +10,7 @@ branch=${GITHUB_REF_NAME}
 
 # Use the branch name to choose the name of the branch. This assumes
 # no branch of name 'update' will ever be used.
-if [[ $branch = master ]];
+if [[ $branch = master || $branch = main ]];
 then
   update=update
 else
