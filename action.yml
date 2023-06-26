@@ -30,12 +30,12 @@ runs:
   using: "composite"
   steps:
     - id: get-version
-      run: ${{ github.action_path }}/get_version.sh ${{ inputs.maven-target }}
+      run: ${GITHUB_ACTION_PATH}/get_version.sh ${{ inputs.maven-target }}
       shell: bash
 
     - id: upload
       run: >
-          ${{ github.action_path }}/upload.sh
+          ${GITHUB_ACTION_PATH}/upload.sh
           ${{ inputs.maven-target }}
           "${{ inputs.email }}"
           "${{ steps.get-version.outputs.version }}"
