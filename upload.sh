@@ -2,19 +2,25 @@
 # Expects to receive inputs:
 # eg: circus.robocalc.robochart.textual.repository/target/repository/ branch version user@host remote
 dir=$1
-branch=$2
-version=$3
-url=$4
-remote=$5
+override=$2
+symlink=$3
+version=$4
+url=$5
+remote=$6
 branch=${GITHUB_REF_NAME}
 
 # Use the branch name to choose the name of the branch. This assumes
 # no branch of name 'update' will ever be used.
-if [[ $branch = master || $branch = main ]];
+if [[ $override = 1 ]];
 then
-  update=update
+  update=$symlink
 else
-  update=$branch
+  if [[ $branch = master || $branch = main ]];
+  then
+    update=update
+  else
+    update=$branch
+  fi
 fi
 
 dest=${update}_${version}

@@ -19,6 +19,14 @@ inputs:
   maven-target:
     description: 'Name of maven target folder'
     required: true
+  sym-link-name:
+    description: 'Override name of symlink on target'
+    required: false
+    default: 'update'
+  sym-link-override:
+    descripton: 'Toggle overriding of target symlink'
+    required: false
+    default: '0'
 outputs:
   version:
     description: 'Version of the plug-in'
@@ -37,7 +45,8 @@ runs:
       run: >
           ${GITHUB_ACTION_PATH}/upload.sh
           ${{ inputs.maven-target }}
-          "${{ inputs.email }}"
+          ${{ inputs.sym-link-override }}
+          "${{ inputs.sym-link-name }}"
           "${{ steps.get-version.outputs.version }}"
           ${{ inputs.remote-user }}@${{ inputs.remote-host }}
           ${{ inputs.remote-root }}/${{ inputs.relative-path }}
