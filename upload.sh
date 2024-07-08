@@ -11,7 +11,7 @@ branch=${GITHUB_REF_NAME}
 
 # Use the branch name to choose the name of the branch. This assumes
 # no branch of name 'update' will ever be used.
-if [[ $override = 1 ]];
+if [[ $override = true ]];
 then
   update=$symlink
 else
