@@ -48,4 +48,4 @@ then
   exit 1;
 fi
 
-echo "::set-output name=dest::${dest}"
+echo "dest=${dest}" >> $GITHUB_OUTPUT
