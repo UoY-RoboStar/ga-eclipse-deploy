@@ -27,6 +27,10 @@ inputs:
     descripton: 'Toggle overriding of target symlink'
     required: false
     default: 'false'
+  version:
+    description: 'Override automatic version'
+    required: false
+    default: 'false'
 outputs:
   version:
     description: 'Version of the plug-in'
@@ -37,9 +41,14 @@ outputs:
 runs:
   using: "composite"
   steps:
-    - id: get-version
+    - if: ${{ inputs.version == 'false' }}
+      id: get-version
       run: ${GITHUB_ACTION_PATH}/get_version.sh ${{ inputs.maven-target }}
       shell: bash
+
+    - if: ${{ inputs.version != 'false' }}
+      id: set-version
+      run: echo "VERSION=${{ inputs.version }}" >> $GITHUB_ENV
 
     - id: upload
       run: >
@@ -47,7 +56,7 @@ runs:
           ${{ inputs.maven-target }}
           ${{ inputs.sym-link-override }}
           "${{ inputs.sym-link-name }}"
-          "${{ steps.get-version.outputs.version }}"
+          "${VERSION}"
           ${{ inputs.remote-user }}@${{ inputs.remote-host }}
           ${{ inputs.remote-root }}/${{ inputs.relative-path }}
       shell: bash
