@@ -49,6 +49,7 @@ runs:
     - if: ${{ inputs.version != 'false' }}
       id: set-version
       run: echo "VERSION=${{ inputs.version }}" >> $GITHUB_ENV
+      shell: bash
 
     - id: upload
       run: >
